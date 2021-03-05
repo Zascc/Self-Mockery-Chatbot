@@ -1,0 +1,33 @@
+version: "2.0"
+stories:
+- story: order path part 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  - action: utter_happy #ask_rate_action
+  - intent: not_satisfied
+  - action: utter_wrong  #loop_action
+  - intent: satisfied
+  - action: utter_goodbye # end remarks
+
+
+# - story: order path part 2
+#   steps:
+#   - checkpoint: check_part_2
+#   - intent: affirm
+#   - action: second_wrong_order_action
+#   - intent: point_wrong
+#   - action: second_apology_action
+#   - checkpoint: check_part2_finished
+# - story: end path
+#   steps:
+#   - checkpoint: check_part2_finished
+#   - or:
+#     - intent: affirm
+#     - intent: goodbye
+#   - action: utter_goodbye

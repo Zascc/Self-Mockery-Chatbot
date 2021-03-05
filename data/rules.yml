@@ -1,0 +1,22 @@
+version: "2.0"
+
+rules:
+
+# - rule: Say goodbye anytime the user says goodbye
+#   steps:
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+- rule: Response to verbal abuse anytime the user makes verbal abuse
+  steps:
+  - intent: verbal_abuse
+  - action: utter_self_mockery_B1
+- rule: Response to sex harassment anytime the user makes sex harassment
+  steps:
+  - intent: sex_harassment
+  - action: utter_self_mockery_B2
+- rule: Response to invalid input anytime the user makes invalid input
+  steps:
+  - intent: nlu_fallback
+  - action: utter_self_mockery_C
+
