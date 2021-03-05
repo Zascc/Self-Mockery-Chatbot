@@ -1,1 +1,1 @@
-# Zascc-Self-Mockery-Chatbot
+Self-Mockery-Chatbot
