@@ -43,10 +43,11 @@ slots:
     influence_conversation: true
   fail_times:
     type: rasa.shared.core.slots.CategoricalSlot
-    initial_value: null
+    initial_value: 0
     auto_fill: true
     influence_conversation: true
     values:
+    - '0'
     - '1'
     - '2'
     - '3'
@@ -92,11 +93,15 @@ responses:
   - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. But I will be professional if you ask me to order something!
   utter_default:
   - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. But I will be professional if you ask me to order something!
+  utter_ask_rate:
+  - text: Are you satisfied with this chatbot?
 actions:
 - wrong_order_action
 - receive_order_action
 - first_apology_action
 - second_apology_action
 - second_wrong_order_action
+- loop_action
+- end_remarks_action
 forms: {}
 e2e_actions: []

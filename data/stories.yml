@@ -9,11 +9,11 @@ stories:
   - action: wrong_order_action
   - intent: point_wrong
   - action: second_apology_action
-  - action: utter_happy #ask_rate_action
-  - intent: not_satisfied
-  - action: utter_wrong  #loop_action
-  - intent: satisfied
-  - action: utter_goodbye # end remarks
+  - action: utter_ask_rate #ask_rate_action
+  - intent: deny
+  - action: loop_action  #loop_action
+  - intent: affirm
+  - action: end_remarks_action # end remarks
 
 
 # - story: order path part 2

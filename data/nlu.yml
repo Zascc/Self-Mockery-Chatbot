@@ -36,6 +36,8 @@ nlu:
     - of course
     - that sounds good
     - correct
+    - satisfied
+    - I'm satisfied with the chatbot
 - intent: deny
   examples: |
     - no
@@ -45,6 +47,8 @@ nlu:
     - don't like that
     - no way
     - not really
+    - not satisfied
+    - I'm not satisfied with the chatbot
 - intent: mood_great
   examples: |
     - perfect

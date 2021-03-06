@@ -11,7 +11,7 @@ from typing import Any, Text, Dict, List
 #
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction
 #
 #
 # class ActionHelloWorld(Action):
@@ -85,8 +85,7 @@ class ActionSecondApology(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         correct_name = tracker.get_slot("order_name")
-        dispatcher.utter_message(text='Woops, my career is over :(, sorry for that mistake. The following order has been changed for you. \
-            You have ordered {}, and you need to pay 100 dollars.'.format(correct_name))
+        dispatcher.utter_message(text='Woops, my career is over :(, sorry for that mistake. The following order has been changed for you. You have ordered {}, and you need to pay 100 dollars.'.format(correct_name))
 
         return []
     
@@ -109,4 +108,32 @@ class ActionSecondWrongOrder(Action):
         wrong_name = f2(correct_name)
         dispatcher.utter_message(text='OK, the order has been placed for you, the following is order details: You have ordered \
             {} and {}, you need to pay 200 dollars'.format(correct_name, wrong_name))
+        
+
+class ActionLoop(Action):
+    def name(self) -> Text:
+        return "loop_action"
+        
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        fail_times = tracker.get_slot('fail_times')
+        dispatcher.utter_message(text='This action is reserved for the loop action, and the story has been restarted.')
+        dispatcher.utter_message(text='******fail_times = {}'.format(fail_times))
+        if(fail_times < 3):
+            return [FollowupAction('utter_greet', 'utter_menu') ,SlotSet('fail_times', fail_times+1)]
+        else:
+            dispatcher.utter_message(text='**** This text is for self-mockery before the chatbot turn to human customer service.')
+            return [FollowupAction('end_remarks_action')]
+
+class ActionEndRemarks(Action):
+    def name(self) -> Text:
+        return "end_remarks_action"
+        
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text='This action is designed for the end remarks')
+
+        
         
