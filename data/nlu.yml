@@ -38,6 +38,8 @@ nlu:
     - correct
     - satisfied
     - I'm satisfied with the chatbot
+    - sure
+    - good
 - intent: deny
   examples: |
     - no
@@ -49,54 +51,21 @@ nlu:
     - not really
     - not satisfied
     - I'm not satisfied with the chatbot
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
 - intent: make_order
   examples: |
     - I want to order [set A](order_name)
     - I want to order [set B](order_name)
     - I want to order [set C](order_name)
+    - [set A](order_name)
+    - [set B](order_name)
+    - [set C](order_name)
 - intent: point_wrong
   examples: |
     - No, you are wrong.
     - You've made a mistake.
     - you are wrong
+    - wrong
+    - ?
 - intent: verbal_abuse
   examples: |
     - You idiot
@@ -117,3 +86,9 @@ nlu:
     - Fuck
     - Fuck you
     - Fuck your mother
+- intent: nlu_fallback
+  examples: |
+    - What is calculus
+    - What 2 + 2
+    - train a bot
+

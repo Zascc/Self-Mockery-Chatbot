@@ -11,7 +11,7 @@ from typing import Any, Text, Dict, List
 #
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction
+from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction, AllSlotsReset
 #
 #
 # class ActionHelloWorld(Action):
@@ -41,6 +41,12 @@ class ActionWrongOrder(Action):
         #dispatcher.utter_message(text="correct order_name is {}".format(correct_name))
         def f1(x):
             return{
+                'a' : 'set A',
+                'b' : 'set B',
+                'c' : 'set C',
+                'set a' : 'set A',
+                'set b' : 'set B',
+                'set c' : 'set C',
                 'A' : 'set A',
                 'B' : 'set B',
                 'C' : 'set C',
@@ -86,6 +92,7 @@ class ActionSecondApology(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         correct_name = tracker.get_slot("order_name")
         dispatcher.utter_message(text='Woops, my career is over :(, sorry for that mistake. The following order has been changed for you. You have ordered {}, and you need to pay 100 dollars.'.format(correct_name))
+        dispatcher.utter_message(text='Are you satisfied with this chatbot?')
 
         return []
     
@@ -118,12 +125,18 @@ class ActionLoop(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         fail_times = tracker.get_slot('fail_times')
-        dispatcher.utter_message(text='This action is reserved for the loop action, and the story has been restarted.')
-        dispatcher.utter_message(text='******fail_times = {}'.format(fail_times))
-        if(fail_times < 3):
-            return [FollowupAction('utter_greet', 'utter_menu') ,SlotSet('fail_times', fail_times+1)]
+        #dispatcher.utter_message(text='This action is reserved for the loop action, and the story has been restarted.')
+        #dispatcher.utter_message(text='fail_times = {}'.format(fail_times))
+        
+        #return [SlotSet('fail_times', fail_times+1)]
+        if(fail_times < 2):
+            #dispatcher.utter_message(text='****changed action')
+            return [AllSlotsReset(), SlotSet('fail_times', fail_times+1), FollowupAction('utter_greet_and_menu')]
+            
+            # return[SlotSet('fail_times', fail_times+1), FollowupAction('utter_greet_and_menu') ]
+            # return [Restarted(), FollowupAction('utter_greet', 'utter_menu') ,SlotSet('fail_times', fail_times+1)]
         else:
-            dispatcher.utter_message(text='**** This text is for self-mockery before the chatbot turn to human customer service.')
+            dispatcher.utter_message(text='This text is for self-mockery before the chatbot turn to human customer service.')
             return [FollowupAction('end_remarks_action')]
 
 class ActionEndRemarks(Action):

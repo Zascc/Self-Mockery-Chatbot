@@ -1,33 +1,114 @@
 version: "2.0"
 stories:
-- story: order path part 1
+- story: story_0deny
   steps:
   - intent: greet
-  - action: utter_greet
-  - action: utter_menu
+  - action: utter_greet_and_menu
+  # - action: utter_menu
   - intent: make_order
   - action: wrong_order_action
   - intent: point_wrong
   - action: second_apology_action
-  - action: utter_ask_rate #ask_rate_action
+  # - action: utter_ask_rate
   - intent: deny
-  - action: loop_action  #loop_action
+  - action: loop_action
   - intent: affirm
-  - action: end_remarks_action # end remarks
+  - action: end_remarks_action
+
+- story: story_1deny
+  steps:
+  - intent: greet
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: affirm
+  - action: end_remarks_action
 
 
-# - story: order path part 2
-#   steps:
-#   - checkpoint: check_part_2
-#   - intent: affirm
-#   - action: second_wrong_order_action
-#   - intent: point_wrong
-#   - action: second_apology_action
-#   - checkpoint: check_part2_finished
-# - story: end path
-#   steps:
-#   - checkpoint: check_part2_finished
-#   - or:
-#     - intent: affirm
-#     - intent: goodbye
-#   - action: utter_goodbye
+- story: story_2deny
+  steps:
+  - intent: greet
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: affirm
+  - action: end_remarks_action
+
+
+- story: story_3deny
+  steps:
+  - intent: greet
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: deny
+  - action: loop_action
+  - action: utter_greet_and_menu
+  # - action: utter_menu
+  - intent: make_order
+  - action: wrong_order_action
+  - intent: point_wrong
+  - action: second_apology_action
+  # - action: utter_ask_rate
+  - intent: affirm
+  - action: end_remarks_action
+  
+
+

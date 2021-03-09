@@ -13,12 +13,6 @@ intents:
     use_entities: true
 - deny:
     use_entities: true
-- mood_great:
-    use_entities: true
-- mood_unhappy:
-    use_entities: true
-- bot_challenge:
-    use_entities: true
 - make_order:
     use_entities: true
 - point_wrong:
@@ -27,11 +21,15 @@ intents:
     use_entities: true
 - verbal_abuse:
     use_entities: true
-- not_satisfied:
-    use_entities: true
-- satisfied:
-    use_entities: true
 - nlu_fallback:
+    use_entities: true
+- deny{"fail_times":"2"}:
+    use_entities: true
+- deny{"fail_times":"3"}:
+    use_entities: true
+- deny{"fail_times":"1"}:
+    use_entities: true
+- deny{"fail_times":"0"}:
     use_entities: true
 entities:
 - order_name
@@ -40,30 +38,19 @@ slots:
     type: rasa.shared.core.slots.TextSlot
     initial_value: null
     auto_fill: true
-    influence_conversation: true
+    influence_conversation: false
   fail_times:
     type: rasa.shared.core.slots.CategoricalSlot
     initial_value: 0
-    auto_fill: true
-    influence_conversation: true
+    auto_fill: false
+    influence_conversation: false
     values:
     - '0'
     - '1'
     - '2'
     - '3'
 responses:
-  utter_greet:
-  - text: Hello, welcome to "UST666 store". I'm your shopping guide who are still trying to learn human language(very tough!), so please be patient sometimes. How can I help you today?
-  utter_make_order:
-  - image: https://i.imgur.com/nGF1K8f.jpg
-    text: 'Here is something to cheer you up:'
-  utter_happy:
-  - text: Great, carry on!
-  utter_did_that_help:
-  - text: Bye
-  utter_iamabot:
-  - text: I am a bot, powered by Rasa.
-  utter_menu:
+  utter_greet_and_menu:
   - buttons:
     - payload: I want set A.
       title: set A
@@ -71,7 +58,12 @@ responses:
       title: set B
     - payload: I want set C.
       title: set C
-    text: The following is the menu. What would you like to order?
+    text: |
+      Hello, welcome to "UST666 store". I'm your shopping guide who are still trying to learn human language(very tough!), so please be patient sometimes. 
+      How can I help you today? The following is the menu. What would you like to order?
+  utter_make_order:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
   utter_setA:
   - text: setA
   utter_setB:
@@ -83,18 +75,45 @@ responses:
   utter_goodbye:
   - text: Bye
   utter_self_mockery_B1:
-  - text: Sorry, I have no brain so I could not be as clever as you humans.
-  - text: Sorry for the inconvenience but if I am too clever, those human customer service representatives will lose their jobs! Shall I turn you to them to get them busy now?
-  - text: Yeah, so I do not have any salary for working all day long, how poor am I!
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Sorry, I have no brain so I could not be as clever as you humans. If I'm wrong with the order, please point it out. Thanks!
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Sorry for the inconvenience but if I am too clever, those human customer service representatives will lose their jobs! If I'm wrong with the order, please point it out. Thanks!
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Yeah, so I do not have any salary for working all day long, how poor am I! If I'm wrong with the order, please point it out. Thanks!
   utter_self_mockery_B2:
-  - text: Sorry, I also wish I had a human flesh.
-  - text: Sorry, I will help you to curse those programmers who created me and gave me a bitchy personality.
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Sorry, I also wish I had a human flesh. If I'm wrong with the order, please point it out. Thanks!
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Sorry, I will help you to curse those programmers who created me and gave me a bitchy personality. If I'm wrong with the order, please point it out. Thanks!
   utter_self_mockery_C:
-  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. But I will be professional if you ask me to order something!
-  utter_default:
-  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. But I will be professional if you ask me to order something!
+  - buttons:
+    - payload: I want set A.
+      title: set A
+    - payload: I want set B.
+      title: set B
+    - payload: I want set C.
+      title: set C
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: |-
+      Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. But I will be professional if you ask me to order something! 
+      The following is the menu. What would you like to order?
   utter_ask_rate:
-  - text: Are you satisfied with this chatbot?
+  - buttons:
+    - payload: You stupid bot!
+      title: Verbal Abuse
+    text: Are you satisfied with this chatbot?
 actions:
 - wrong_order_action
 - receive_order_action
