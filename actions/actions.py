@@ -114,7 +114,7 @@ class ActionSecondWrongOrder(Action):
             }[x]
         wrong_name = f2(correct_name)
         dispatcher.utter_message(text='OK, the order has been placed for you, the following is order details: You have ordered \
-            {} and {}, you need to pay 200 dollars'.format(correct_name, wrong_name))
+            {} and {}, you need to pay 200 dollars.'.format(correct_name, wrong_name))
         
 
 class ActionLoop(Action):
