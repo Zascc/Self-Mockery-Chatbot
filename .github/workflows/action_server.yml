@@ -15,7 +15,8 @@ jobs:
 
     - id: action_server
       name: Build an action server with a custom actions
-      uses: RasaHQ/action-server-gha@master
+      uses: RasaHQ/rasa-action-server-gha@v1.0.3
+
       # Full list of parameters: https://github.com/RasaHQ/action-server-gha/tree/master#input-arguments
       with:
         docker_image_name: 'zasc/self-mockery-chatbot'
