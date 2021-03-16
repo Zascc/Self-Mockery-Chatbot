@@ -146,7 +146,7 @@ class ActionEndRemarks(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text='This action is designed for the end remarks')
+        dispatcher.utter_message(text='This action is designed for the end remarks.')
 
         
         
