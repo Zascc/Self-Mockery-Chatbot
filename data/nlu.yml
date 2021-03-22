@@ -72,11 +72,12 @@ nlu:
     - Fuck
     - Fuck you
     - Fuck your mother
-- intent: nlu_fallback
+- intent: out_of_scope
   examples: |
     - What is calculus
     - What 2 + 2
     - train a bot
+    - ??
 - intent: address_and_time
   examples: |
     - I want to check the weather in [Shanghai](city) [tomorrow](date).

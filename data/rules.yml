@@ -21,4 +21,8 @@ rules:
   - intent: nlu_fallback
   - action: utter_self_mockery_not_understood
 
+- rule: Response to out-of-scope input anytime the user makes out-of-scope input
+  steps:
+  - intent: out_of_scope
+  - action: utter_self_mockery_not_understood
 
