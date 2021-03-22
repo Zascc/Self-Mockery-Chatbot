@@ -48,24 +48,13 @@ responses:
   - text: Let me check the weather again for you.
   utter_transfer_to_human:
   - text: Now you will be transferred to manual service.
-  
+  utter_default:
+  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
   utter_self_mockery_B2:
-  - buttons:
-    - payload: You stupid bot!
-      title: Verbal Abuse
-    text: Sorry, I also wish I had a human flesh. If I'm wrong with the order, please point it out. Thanks!
-  - buttons:
-    - payload: You stupid bot!
-      title: Verbal Abuse
-    text: Sorry, I will help you to curse those programmers who created me and gave me a bitchy personality. If I'm wrong with the order, please point it out. Thanks!
+  - text: Sorry, I also wish I had a human flesh.
+  - text: Sorry, I will help you to curse those programmers who created me and gave me a bitchy personality.
   utter_self_mockery_not_understood:
-  - buttons:
-    - payload: You stupid bot!
-      title: Verbal Abuse
-    text: |
-      Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
-
-
+  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
 actions:
 - end_remarks_action
 - ask_confirmation_action

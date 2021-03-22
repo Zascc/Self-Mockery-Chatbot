@@ -51,7 +51,7 @@ class ActionConfirmation(Action):
 
         buttons = []
         buttons.append({"title": 'Complain to the bot' , "payload": 'No, you stupid bot!'})
-        dispatcher.utter_message(text='Is this what you want to query?')
+        dispatcher.utter_message(text='Is this what you want to query?', buttons=buttons)
         return []
 
 
