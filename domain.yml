@@ -21,6 +21,8 @@ intents:
     use_entities: true
 - address_and_time:
     use_entities: true
+- out_of_scope:
+    use_entities: true
 entities:
 - city
 - date
