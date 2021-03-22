@@ -1,114 +1,63 @@
 version: "2.0"
 stories:
-- story: story_0deny
+- story: greet and ask for input
   steps:
   - intent: greet
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: deny
-  - action: loop_action
+  - action: utter_greet
+  - action: utter_ask_time_address
+  - intent: address_and_time
+  - checkpoint: loop_started
+
+
+- story: affirm after confirmation
+  steps:
+  - checkpoint: loop_finished
   - intent: affirm
   - action: end_remarks_action
 
-- story: story_1deny
+- story: deny after confirmation and transfer to human
   steps:
-  - intent: greet
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
+  - checkpoint: loop_finished
   - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
+  - action: ask_transfer_to_human_action
   - intent: affirm
-  - action: end_remarks_action
+  - checkpoint: transfer_to_human_started
 
-
-- story: story_2deny
+- story: deny after confirmation and not transfer to human
   steps:
-  - intent: greet
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
+  - checkpoint: loop_finished
   - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
+  - action: ask_transfer_to_human_action
   - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: affirm
-  - action: end_remarks_action
+  - action: self_mockery_inability_action
+  - action: utter_do_again
+  - checkpoint: loop_started
 
-
-- story: story_3deny
+- story: complain after confirmation
   steps:
-  - intent: greet
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: deny
-  - action: loop_action
-  - action: utter_greet_and_menu
-  # - action: utter_menu
-  - intent: make_order
-  - action: wrong_order_action
-  - intent: point_wrong
-  - action: second_apology_action
-  # - action: utter_ask_rate
-  - intent: affirm
+  - checkpoint: loop_finished
+  - intent: complain
+  - action: self_mockery_abuse_action
+  - action: utter_do_again
+  - checkpoint: loop_started
+
+
+
+
+
+# utils stories
+
+- story: loop story
+  steps:
+  - checkpoint: loop_started
+  - action: utter_working
+  - action: check_weather_action
+  - action: ask_confirmation_action
+  - checkpoint: loop_finished
+
+- story: transfer to human
+  steps:
+  - checkpoint: transfer_to_human_started
+  - action: self_mockery_inability_action
+  - action: utter_transfer_to_human
   - action: end_remarks_action
-  
-
-

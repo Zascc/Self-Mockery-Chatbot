@@ -51,22 +51,7 @@ nlu:
     - not really
     - not satisfied
     - I'm not satisfied with the chatbot
-- intent: make_order
-  examples: |
-    - I want to order [set A](order_name)
-    - I want to order [set B](order_name)
-    - I want to order [set C](order_name)
-    - [set A](order_name)
-    - [set B](order_name)
-    - [set C](order_name)
-- intent: point_wrong
-  examples: |
-    - No, you are wrong.
-    - You've made a mistake.
-    - you are wrong
-    - wrong
-    - ?
-- intent: verbal_abuse
+- intent: complain
   examples: |
     - You idiot
     - Stupid chatbot
@@ -77,6 +62,7 @@ nlu:
     - You are a fool
     - You are just a robot
     - You are not a human
+    - No, you stupid bot!
 - intent: sex_harassment
   examples: |
     - You bitch
@@ -91,4 +77,9 @@ nlu:
     - What is calculus
     - What 2 + 2
     - train a bot
-
+- intent: address_and_time
+  examples: |
+    - I want to check the weather in [Shanghai](city) [tomorrow](date).
+    - I want to check the weather in [Shanghai](city) [the day after tomorrow](date).
+    - [Shanghai](city) [tomorrow](date).
+    - [Shanghai](city) [the day after tomorrow](date).

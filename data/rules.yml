@@ -7,10 +7,10 @@ rules:
 #   - intent: goodbye
 #   - action: utter_goodbye
 
-- rule: Response to verbal abuse anytime the user makes verbal abuse
-  steps:
-  - intent: verbal_abuse
-  - action: utter_self_mockery_B1
+# - rule: Response to verbal abuse anytime the user makes verbal abuse
+#   steps:
+#   - intent: verbal_abuse
+#   - action: utter_self_mockery_B1
 - rule: Response to sex harassment anytime the user makes sex harassment
   steps:
   - intent: sex_harassment
@@ -18,6 +18,6 @@ rules:
 - rule: Response to invalid input anytime the user makes invalid input
   steps:
   - intent: nlu_fallback
-  - action: utter_self_mockery_C
+  - action: utter_self_mockery_not_understood
 
 
