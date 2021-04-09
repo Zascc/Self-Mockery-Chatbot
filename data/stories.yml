@@ -4,8 +4,8 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet
-  - action: utter_ask_time_address
-  - intent: address_and_time
+  - action: utter_ask_product
+  - intent: variables
   - checkpoint: loop_started
 
 
@@ -15,44 +15,60 @@ stories:
   - intent: affirm
   - action: end_remarks_action
 
-- story: deny after confirmation and transfer to human
-  steps:
-  - checkpoint: loop_finished
-  - intent: deny
-  - action: ask_transfer_to_human_action
-  - intent: affirm
-  - checkpoint: transfer_to_human_started
 
-- story: deny after confirmation and not transfer to human
+- story: deny after confirmation and variables
   steps:
   - checkpoint: loop_finished
-  - intent: deny
-  - action: ask_transfer_to_human_action
   - intent: deny
   - action: self_mockery_inability_action
-  - action: utter_do_again
+  - action: ask_for_variables_input_action
+  - intent: variables
   - checkpoint: loop_started
+
+
+- story: variables after confirmation
+  steps:
+  - checkpoint: loop_finished
+  - intent: variables
+  - action: self_mockery_inability_action
+  - checkpoint: loop_started
+
 
 - story: complain after confirmation
   steps:
   - checkpoint: loop_finished
   - intent: complain
   - action: self_mockery_abuse_action
-  - action: utter_do_again
+  - action: ask_for_variables_input_action
+  - intent: variables
   - checkpoint: loop_started
 
 
+- story: try again after not transfer to human
+  steps: 
+  - checkpoint: loop_finished
+  - intent: try_again
+  - checkpoint: loop2_started
 
-
+- story: transfer to human after several loops
+  steps: 
+  - checkpoint: loop_finished
+  - intent: transfer_to_human
+  - checkpoint: transfer_to_human_started
 
 # utils stories
 
 - story: loop story
   steps:
   - checkpoint: loop_started
-  - action: utter_working
-  - action: check_weather_action
-  - action: ask_confirmation_action
+  - action: search_product_action # utter_working and serach product
+  # need a slot to memorize the number of loop to alternate output 
+  - checkpoint: loop_finished
+
+- story: loop story ask transfer to human
+  steps:
+  - checkpoint: loop2_started
+  - action: search_product_action_try_again
   - checkpoint: loop_finished
 
 - story: transfer to human

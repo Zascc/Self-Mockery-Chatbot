@@ -25,7 +25,7 @@ pipeline:
     model_confidence: linear_norm
 
   - name: FallbackClassifier
-    threshold: 0.7
+    threshold: 0.5
     ambiguity_threshold: 0.1
 
 # Configuration for Rasa Core.

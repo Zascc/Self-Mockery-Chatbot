@@ -41,59 +41,102 @@ class ActionEndRemarks(Action):
         return []
 
     
-class ActionConfirmation(Action):
+# class ActionConfirmation(Action):
+#     def name(self) -> Text:
+#         return "ask_confirmation_action"
+
+#     def run(self, dispatcher: CollectingDispatcher,
+#         tracker: Tracker,
+#         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#         buttons = []
+#         buttons.append({"title": 'Complain to the bot' , "payload": 'No, you stupid bot!'})
+#         dispatcher.utter_message(text='Is this what you want to query?', buttons=buttons)
+#         return []
+
+
+
+class ActionAskVariablesInput(Action):
     def name(self) -> Text:
-        return "ask_confirmation_action"
+        return "ask_for_variables_input_action"
 
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        buttons = []
-        buttons.append({"title": 'Complain to the bot' , "payload": 'No, you stupid bot!'})
-        dispatcher.utter_message(text='Is this what you want to query?', buttons=buttons)
+        dispatcher.utter_message(text='****Ask for variables input scripts.****')
         return []
 
 
-
-class ActionTransferToHuman(Action):
+class ActionSearchProduct(Action):
     def name(self) -> Text:
-        return "ask_transfer_to_human_action"
+        return "search_product_action"
 
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text='Sorry, it seems my CPU is quarrelling with my hard disk which leads to my bad performance, do you want to transfer to manual service?')
-        return []
-
-
-class ActionCheckWeather(Action):
-    def name(self) -> Text:
-        return "check_weather_action"
-
-    def run(self, dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        city = tracker.get_slot("city")
+        loop_num = tracker.get_slot("loop_num")
         date = tracker.get_slot("date")
-        def weather_condition(x):
-            return{
-                0 : 'sunny',
-                1 : 'rainy',
-                2 : 'windy',
-                3 : 'cloudy',
-                4 : 'thundershower'
+        
+        def working_scripts(loop_num):
+            scripts_dict = {
+                1 : "Just a momnet, I'm working on it...",
+                2 : "Wait a minute, let me see...",
+                3 : "OK, I will check what I have..."
+            }
+            if(loop_num <= 3):
+                working_script = scripts_dict[loop_num]
+            else:
+                working_script = "Sure. See if I could do better..."
+            return working_script
 
 
-            }[x]
-        degree = random.randint(0, 20)
-        weather = weather_condition(random.randint(0, 4))
-        message = 'The weather in {} {} will be {}, temperature ranging from {}°C to {}°C.'.format(city, date, weather, degree, degree + 6)
 
-        dispatcher.utter_message(text=message)
+        def recommendation_scripts(loop_num):
+            scripts_dict = {
+                1 : "Something like this one?",
+                2 : "How about this?",
+                3 : "How does this one look?"
+            }
+            if(loop_num <= 3):
+                recommendation_script = scripts_dict[loop_num]
+            else:
+                recommendation_script = "How do you like this one?"
+
+            return recommendation_script
+
+        def description_scripts():
+            return "****WSSZSX****"
+
+        working_script = working_scripts(loop_num)
+        recommendation_script = recommendation_scripts(loop_num)
+        description_script = description_scripts()
+
+        if(loop_num <= 3):
+            dispatcher.utter_message(text=working_script)
+            dispatcher.utter_message(text=recommendation_script + description_script)
+            # + display a picture
+        else:
+            dispatcher.utter_message(text='Do you want to transfer to human service or let me try again? (Just type in "Transfer to human" if you want to transfer to human service)')
+
+
+        loop_num += 1
+        return [SlotSet("loop_num", loop_num)]
+
+class ActionSearchProductAgain(Action):
+    def name(self) -> Text:
+        return "search_product_action_try_again"
+
+    def run(self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="Sure. See if I could do better...")
+        dispatcher.utter_message(text='How do you like this one? ****WSSZSX****')
         return []
+
+        
+        
 
 
 class ActionSelfMockInability(Action):

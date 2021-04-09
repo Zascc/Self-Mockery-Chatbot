@@ -19,29 +19,56 @@ intents:
     use_entities: true
 - complain:
     use_entities: true
-- address_and_time:
-    use_entities: true
 - out_of_scope:
     use_entities: true
+- try_again:
+    use_entities: true
+- variables:
+    use_entities: true
+- transfer_to_human:
+    use_entities: true
 entities:
-- city
-- date
+- Object
+- Color
+- Darkness
+- Sleeve_length
+- Style
 slots:
-  city:
+  Object:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: null
+    initial_value: shirt
     auto_fill: true
     influence_conversation: false
-  date:
+  Color:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: tomorrow
+    initial_value: blue
+    auto_fill: true
+    influence_conversation: false
+  Darkness:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: dark
+    auto_fill: true
+    influence_conversation: false
+  Sleeve_length:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: long
+    auto_fill: true
+    influence_conversation: false
+  Style:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: formal
+    auto_fill: true
+    influence_conversation: false
+  loop_num:
+    type: rasa.shared.core.slots.AnySlot
+    initial_value: 1
     auto_fill: true
     influence_conversation: false
 responses:
   utter_greet:
-  - text: Hello, I am a bot that can help you check the weather. And I am still trying to learn human language (very tough!), so please be patient sometimes.
-  utter_ask_time_address:
-  - text: What is the city and date you want to check?
+  - text: Hello, I am a bot that can help you choose clothes. And I am still trying to learn human language (very tough!), so please be patient sometimes.
+  utter_ask_product:
+  - text: What would you like to buy? Describe what you have in mind and I will find it for you.
   utter_goodbye:
   - text: Bye
   utter_working:
@@ -59,10 +86,11 @@ responses:
   - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
 actions:
 - end_remarks_action
-- ask_confirmation_action
 - ask_transfer_to_human_action
-- check_weather_action
 - self_mockery_inability_action
 - self_mockery_abuse_action
+- ask_for_variables_input_action
+- search_product_action
+- search_product_action_try_again
 forms: {}
 e2e_actions: []

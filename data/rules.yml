@@ -15,7 +15,6 @@ rules:
   steps:
   - intent: sex_harassment
   - action: utter_self_mockery_B2
-  - action: utter_ask_time_address
 - rule: Response to invalid input anytime the user makes invalid input
   steps:
   - intent: nlu_fallback

@@ -79,9 +79,14 @@ nlu:
     - train a bot
     - ??
     - wtf
-- intent: address_and_time
+- intent: variables
   examples: |
-    - I want to check the weather in [Shanghai](city) [tomorrow](date).
-    - I want to check the weather in [Shanghai](city) [the day after tomorrow](date).
-    - [Shanghai](city) [tomorrow](date).
-    - [Shanghai](city) [the day after tomorrow](date).
+    - This is nlu example for variables.
+- intent: try_again
+  examples: |
+    - try again
+    - Please try again.
+- intent: transfer_to_human
+  examples: |
+    - Transfer to human
+    - Please transfer to human
