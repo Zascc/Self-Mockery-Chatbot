@@ -11,14 +11,14 @@ stories:
 
 - story: affirm after confirmation
   steps:
-  - checkpoint: loop_finished
+  - checkpoint: switching_finished
   - intent: affirm
   - action: end_remarks_action
 
 
 - story: deny after confirmation and variables
   steps:
-  - checkpoint: loop_finished
+  - checkpoint: switching_finished
   - intent: deny
   - action: self_mockery_inability_action
   - action: ask_for_variables_input_action
@@ -28,7 +28,7 @@ stories:
 
 - story: variables after confirmation
   steps:
-  - checkpoint: loop_finished
+  - checkpoint: switching_finished
   - intent: variables
   - action: self_mockery_inability_action
   - checkpoint: loop_started
@@ -36,7 +36,7 @@ stories:
 
 - story: complain after confirmation
   steps:
-  - checkpoint: loop_finished
+  - checkpoint: switching_finished
   - intent: complain
   - action: self_mockery_abuse_action
   - action: ask_for_variables_input_action
@@ -44,17 +44,64 @@ stories:
   - checkpoint: loop_started
 
 
-- story: try again after not transfer to human
-  steps: 
-  - checkpoint: loop_finished
-  - intent: try_again
-  - checkpoint: loop2_started
+- story: switching story1
+  steps:
+  - checkpoint: switching_started
+  - slot_was_set:
+    - loop_num: __other__
+  - checkpoint: switching_finished
 
-- story: transfer to human after several loops
-  steps: 
-  - checkpoint: loop_finished
-  - intent: transfer_to_human
-  - checkpoint: transfer_to_human_started
+- story: switching story2
+  steps:
+  - checkpoint: switching_started
+  - slot_was_set: 
+    - loop_num: 4
+  - checkpoint: last_cycle_started
+
+- story: story complain before transfer to human
+  steps:
+  - checkpoint: last_cycle_started
+  - intent: complain
+  - action: self_mockery_abuse_action
+  - action: ask_for_variables_input_action
+  - intent: variables
+  - checkpoint: ask_transfer_to_human
+
+- story: story deny before transfer to human
+  steps:
+  - checkpoint: last_cycle_started
+  - intent: deny
+  - action: self_mockery_inability_action
+  - action: ask_for_variables_input_action
+  - intent: variables
+  - checkpoint: ask_transfer_to_human
+
+- story: story variables before transfer to human
+  steps:
+  - checkpoint: last_cycle_started
+  - intent: variables
+  - action: self_mockery_inability_action
+  - checkpoint: ask_transfer_to_human
+
+
+- story: loop story ask transfer to human
+  steps:
+  - checkpoint: ask_transfer_to_human
+  - action: ask_transfer_to_human_action
+  - intent: try_again
+  - action: search_product_try_again_action #
+  - intent: affirm
+  - action: end_remarks_action
+
+- story: loop story ask transfer to human
+  steps:
+  - checkpoint: ask_transfer_to_human
+  - action: ask_transfer_to_human_action
+  - intent: transfer
+  - action: transfer_to_human_and_stop_action
+
+
+
 
 # utils stories
 
@@ -63,17 +110,4 @@ stories:
   - checkpoint: loop_started
   - action: search_product_action # utter_working and serach product
   # need a slot to memorize the number of loop to alternate output 
-  - checkpoint: loop_finished
-
-- story: loop story ask transfer to human
-  steps:
-  - checkpoint: loop2_started
-  - action: search_product_action_try_again
-  - checkpoint: loop_finished
-
-- story: transfer to human
-  steps:
-  - checkpoint: transfer_to_human_started
-  - action: self_mockery_inability_action
-  - action: utter_transfer_to_human
-  - action: end_remarks_action
+  - checkpoint: switching_started

@@ -34,36 +34,45 @@ entities:
 - Sleeve_length
 - Style
 slots:
-  Object:
-    type: rasa.shared.core.slots.TextSlot
-    initial_value: shirt
-    auto_fill: true
+  Variables_bool:
+    type: rasa.shared.core.slots.ListSlot
+    initial_value: [0,0,0,0]
+    auto_fill: false
+    influence_conversation: false
+  Slot_list:
+    type: rasa.shared.core.slots.ListSlot
+    initial_value: ['color', 'sleeve_length', 'darkness', 'style']
+    auto_fill: false
     influence_conversation: false
   Color:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: blue
+    initial_value: HKUST
     auto_fill: true
     influence_conversation: false
   Darkness:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: dark
+    initial_value: HKUST
     auto_fill: true
     influence_conversation: false
   Sleeve_length:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: long
+    initial_value: HKUST
     auto_fill: true
     influence_conversation: false
   Style:
     type: rasa.shared.core.slots.TextSlot
-    initial_value: formal
+    initial_value: HKUST
     auto_fill: true
     influence_conversation: false
   loop_num:
-    type: rasa.shared.core.slots.AnySlot
+    type: rasa.shared.core.slots.CategoricalSlot
     initial_value: 1
-    auto_fill: true
-    influence_conversation: false
+    values:
+      - 4
+      - 5
+      - 6
+    auto_fill: false
+    influence_conversation: true
 responses:
   utter_greet:
   - text: Hello, I am a bot that can help you choose clothes. And I am still trying to learn human language (very tough!), so please be patient sometimes.
@@ -92,5 +101,6 @@ actions:
 - ask_for_variables_input_action
 - search_product_action
 - search_product_action_try_again
+- haha_action
 forms: {}
 e2e_actions: []

@@ -13,20 +13,6 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction, AllSlotsReset
 import random
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
 
 
 class ActionEndRemarks(Action):
@@ -39,22 +25,6 @@ class ActionEndRemarks(Action):
 
         dispatcher.utter_message(text='Thank you very much for your use and participation, and please cooperate with our next questionnaire and statistics.')
         return []
-
-    
-# class ActionConfirmation(Action):
-#     def name(self) -> Text:
-#         return "ask_confirmation_action"
-
-#     def run(self, dispatcher: CollectingDispatcher,
-#         tracker: Tracker,
-#         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-#         buttons = []
-#         buttons.append({"title": 'Complain to the bot' , "payload": 'No, you stupid bot!'})
-#         dispatcher.utter_message(text='Is this what you want to query?', buttons=buttons)
-#         return []
-
-
 
 class ActionAskVariablesInput(Action):
     def name(self) -> Text:
@@ -77,7 +47,48 @@ class ActionSearchProduct(Action):
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         loop_num = tracker.get_slot("loop_num")
-        date = tracker.get_slot("date")
+
+        slot_bool = tracker.get_slot("Variables_bool")
+        color = tracker.get_slot("Color")
+        darkness = tracker.get_slot("Darkness")
+        sleeve_length = tracker.get_slot("Sleeve_length")
+        style = tracker.get_slot("Style")
+
+        slot_list = tracker.get_slot("Slot_list")
+        slot_names = ['color', 'sleeve_length', 'darkness', 'style']
+        slot_temp_list = [color, sleeve_length, darkness, style]
+        def f(x):
+            return{
+                'color' : 0,
+                'sleeve_length': 1,
+                'darkness': 2,
+                'style': 3
+
+            }[x]
+        #['color', 'sleeve_length', 'darkness', 'style']
+
+        if slot_list:
+            for i in slot_names:
+                if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
+                    slot_bool[f(i)] = 1
+                    slot_list.remove(i)
+                    break
+        img_name = ''
+        for i in slot_bool:
+            img_name += str(i)
+             
+            # if('color' in slot_list and color != "HKUST"):
+            #     slot_bool[0] = 1
+            #     slot_list.remove('color')
+            # elif('sleeve_length' in slot_list and sleeve_length != "HKUST"):
+            #     slot_bool[1] = 1
+            #     slot_list.remove('sleeve_length')
+            # elif('darkness' in slot_list and color != "HKUST"):
+            #     slo
+
+
+
+
         
         def working_scripts(loop_num):
             scripts_dict = {
@@ -113,26 +124,44 @@ class ActionSearchProduct(Action):
         recommendation_script = recommendation_scripts(loop_num)
         description_script = description_scripts()
 
-        if(loop_num <= 3):
-            dispatcher.utter_message(text=working_script)
-            dispatcher.utter_message(text=recommendation_script + description_script)
-            # + display a picture
+
+
+
+        if(True):
+            if(loop_num <= 3):
+                dispatcher.utter_message(text=working_script)
+                dispatcher.utter_message(text=recommendation_script + description_script)
+                # + display a picture
+            else:
+                dispatcher.utter_message(text='Do you want to transfer to human service or let me try again? (Just type in "Transfer to human" if you want to transfer to human service)')
+            loop_num += 1
+            if(loop_num == 4):
+                dispatcher.utter_message(text='LOOP_NUM = {}, wsszsx should be uttered then.'.format(loop_num))
         else:
-            dispatcher.utter_message(text='Do you want to transfer to human service or let me try again? (Just type in "Transfer to human" if you want to transfer to human service)')
+            pass
 
-
-        loop_num += 1
+        
         return [SlotSet("loop_num", loop_num)]
 
 class ActionSearchProductAgain(Action):
     def name(self) -> Text:
-        return "search_product_action_try_again"
+        return "search_product_try_again_action"
 
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Sure. See if I could do better...")
         dispatcher.utter_message(text='How do you like this one? ****WSSZSX****')
+        return []
+
+class ActionTransAndStop(Action):
+    def name(self) -> Text:
+        return "transfer_to_human_and_stop_action"
+
+    def run(self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="Transfer and stop.")
         return []
 
         
@@ -224,18 +253,17 @@ class ActionSelfMockAbuse(Action):
     
 #         return []
 
-# class ActionSecondApology(Action):
-#     def name(self) -> Text:
-#         return "second_apology_action"
+class ActionHaha(Action):
+    def name(self) -> Text:
+        return "haha_action"
         
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#         correct_name = tracker.get_slot("order_name")
-#         dispatcher.utter_message(text='Woops, my career is over :(, sorry for that mistake. The following order has been changed for you. You have ordered {}, and you need to pay 100 dollars.'.format(correct_name))
-#         dispatcher.utter_message(text='Are you satisfied with this chatbot?')
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        num = tracker.get_slot("loop_num")
+        dispatcher.utter_message(text='$$$ This should be displayed if slot_was_set works properly and loop time is {}$$$'.format(num))
 
-#         return []
+        return []
     
 
 # class ActionSecondWrongOrder(Action):
