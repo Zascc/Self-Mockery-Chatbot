@@ -36,12 +36,20 @@ entities:
 slots:
   Variables_bool:
     type: rasa.shared.core.slots.ListSlot
-    initial_value: [0,0,0,0]
+    initial_value:
+    - 0
+    - 0
+    - 0
+    - 0
     auto_fill: false
     influence_conversation: false
   Slot_list:
     type: rasa.shared.core.slots.ListSlot
-    initial_value: ['color', 'sleeve_length', 'darkness', 'style']
+    initial_value:
+    - color
+    - sleeve_length
+    - darkness
+    - style
     auto_fill: false
     influence_conversation: false
   Color:
@@ -67,12 +75,11 @@ slots:
   loop_num:
     type: rasa.shared.core.slots.CategoricalSlot
     initial_value: 1
-    values:
-      - 4
-      - 5
-      - 6
     auto_fill: false
     influence_conversation: true
+    values:
+    - '5'
+    - '6'
 responses:
   utter_greet:
   - text: Hello, I am a bot that can help you choose clothes. And I am still trying to learn human language (very tough!), so please be patient sometimes.
@@ -100,7 +107,8 @@ actions:
 - self_mockery_abuse_action
 - ask_for_variables_input_action
 - search_product_action
-- search_product_action_try_again
+- search_product_try_again_action
+- transfer_to_human_and_stop_action
 - haha_action
 forms: {}
 e2e_actions: []

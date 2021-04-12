@@ -81,8 +81,9 @@ nlu:
     - wtf
 - intent: variables
   examples: |
-    - I want a [blue](Color) shirt with [long sleeves](Sleeve_length).
-    - No, I want a [darker]() one.
+    - I want a  [formal](Style) [blue](Color) shirt with [long sleeves](Sleeve_length).
+    - I want a [dark](Darkness) [blue](Color) shirt with [long sleeves](Sleeve_length) and [formal](Style) style.
+    - No, I want a [darker](Darkness) one.
 - intent: try_again
   examples: |
     - try again

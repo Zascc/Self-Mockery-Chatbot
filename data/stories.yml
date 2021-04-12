@@ -55,7 +55,7 @@ stories:
   steps:
   - checkpoint: switching_started
   - slot_was_set: 
-    - loop_num: 4
+    - loop_num: 5
   - checkpoint: last_cycle_started
 
 - story: story complain before transfer to human
@@ -84,20 +84,40 @@ stories:
   - checkpoint: ask_transfer_to_human
 
 
-- story: loop story ask transfer to human
+- story: loop story ask transfer to human - try again
   steps:
   - checkpoint: ask_transfer_to_human
   - action: ask_transfer_to_human_action
   - intent: try_again
   - action: search_product_try_again_action #
+  - checkpoint: satisfaction_started
+
+- story: affirm after last cycle
+  steps:
+  - checkpoint: satisfaction_started
   - intent: affirm
   - action: end_remarks_action
 
-- story: loop story ask transfer to human
+- story: deny after last cycle
+  steps:
+  - checkpoint: satisfaction_started
+  - intent: deny
+  - action: self_mockery_inability_action
+  - checkpoint: ask_transfer_to_human
+
+- story: complain after last cycle
+  steps:
+  - checkpoint: satisfaction_started
+  - intent: complain
+  - action: self_mockery_abuse_action
+  - checkpoint: ask_transfer_to_human
+
+
+- story: loop story ask transfer to human - transfer
   steps:
   - checkpoint: ask_transfer_to_human
   - action: ask_transfer_to_human_action
-  - intent: transfer
+  - intent: transfer_to_human
   - action: transfer_to_human_and_stop_action
 
 

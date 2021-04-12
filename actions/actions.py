@@ -37,6 +37,20 @@ class ActionAskVariablesInput(Action):
         dispatcher.utter_message(text='****Ask for variables input scripts.****')
         return []
 
+class ActionAskTransferToHuman(Action):
+    def name(self) -> Text:
+        return "ask_transfer_to_human_action"
+
+    def run(self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        buttons = []
+        buttons.append({"title": 'Try again' , "payload": 'Try again.'})
+        buttons.append({"title": 'Transfer to human', "payload": 'Transfer to human.'})
+        
+        dispatcher.utter_message(text='Do you want to transfer to human service or let me try again?', buttons=buttons)
+        return []
+
 
 class ActionSearchProduct(Action):
     def name(self) -> Text:
@@ -57,6 +71,8 @@ class ActionSearchProduct(Action):
         slot_list = tracker.get_slot("Slot_list")
         slot_names = ['color', 'sleeve_length', 'darkness', 'style']
         slot_temp_list = [color, sleeve_length, darkness, style]
+
+        previous_slot_bool = slot_bool.copy()
         def f(x):
             return{
                 'color' : 0,
@@ -66,13 +82,21 @@ class ActionSearchProduct(Action):
 
             }[x]
         #['color', 'sleeve_length', 'darkness', 'style']
-
+        description_variable = None
         if slot_list:
             for i in slot_names:
                 if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
                     slot_bool[f(i)] = 1
                     slot_list.remove(i)
+                    description_variable = i
                     break
+            
+        if (previous_slot_bool == slot_bool):
+            # dispatcher.utter_message(text='prev bool{}'.format(previous_slot_bool))
+            # dispatcher.utter_message(text='current bool{}'.format(slot_bool))
+            dispatcher.utter_message(text='Words to remind user to input variables...')
+            return []
+        
         img_name = ''
         for i in slot_bool:
             img_name += str(i)
@@ -117,31 +141,28 @@ class ActionSearchProduct(Action):
 
             return recommendation_script
 
-        def description_scripts():
-            return "****WSSZSX****"
+        def description_scripts(description_variable):
+            return "Description scripts on {}".format(description_variable)
 
         working_script = working_scripts(loop_num)
         recommendation_script = recommendation_scripts(loop_num)
-        description_script = description_scripts()
-
-
+        description_script = description_scripts(description_variable)
 
 
         if(True):
-            if(loop_num <= 3):
+            if(loop_num <= 4):
                 dispatcher.utter_message(text=working_script)
                 dispatcher.utter_message(text=recommendation_script + description_script)
+                dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******')
                 # + display a picture
             else:
-                dispatcher.utter_message(text='Do you want to transfer to human service or let me try again? (Just type in "Transfer to human" if you want to transfer to human service)')
+                pass
             loop_num += 1
-            if(loop_num == 4):
-                dispatcher.utter_message(text='LOOP_NUM = {}, wsszsx should be uttered then.'.format(loop_num))
         else:
             pass
 
         
-        return [SlotSet("loop_num", loop_num)]
+        return [SlotSet("loop_num", loop_num), SlotSet("Slot_list", slot_list), SlotSet("Variables_bool", slot_bool)]
 
 class ActionSearchProductAgain(Action):
     def name(self) -> Text:
@@ -151,7 +172,8 @@ class ActionSearchProductAgain(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Sure. See if I could do better...")
-        dispatcher.utter_message(text='How do you like this one? ****WSSZSX****')
+        dispatcher.utter_message(text='How do you like this one? ****Description words****')
+        dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******')
         return []
 
 class ActionTransAndStop(Action):
