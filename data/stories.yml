@@ -20,9 +20,9 @@ stories:
   steps:
   - checkpoint: switching_finished
   - intent: deny
-  - action: self_mockery_inability_action
-  - action: ask_for_variables_input_action
+  - action: utter_ask_for_var_after_deny
   - intent: variables
+  - action: self_mockery_when_wrong_action
   - checkpoint: loop_started
 
 
@@ -30,7 +30,7 @@ stories:
   steps:
   - checkpoint: switching_finished
   - intent: variables
-  - action: self_mockery_inability_action
+  - action: self_mockery_when_wrong_action
   - checkpoint: loop_started
 
 
@@ -71,16 +71,16 @@ stories:
   steps:
   - checkpoint: last_cycle_started
   - intent: deny
-  - action: self_mockery_inability_action
-  - action: ask_for_variables_input_action
+  - action: utter_ask_for_var_after_deny
   - intent: variables
+  - action: self_mockery_when_wrong_action
   - checkpoint: ask_transfer_to_human
 
 - story: story variables before transfer to human
   steps:
   - checkpoint: last_cycle_started
   - intent: variables
-  - action: self_mockery_inability_action
+  - action: self_mockery_when_wrong_action
   - checkpoint: ask_transfer_to_human
 
 
@@ -89,7 +89,7 @@ stories:
   - checkpoint: ask_transfer_to_human
   - action: ask_transfer_to_human_action
   - intent: try_again
-  - action: search_product_try_again_action #
+  - action: search_product_try_again_action
   - checkpoint: satisfaction_started
 
 - story: affirm after last cycle
@@ -102,7 +102,7 @@ stories:
   steps:
   - checkpoint: satisfaction_started
   - intent: deny
-  - action: self_mockery_inability_action
+  - action: self_mockery_when_wrong_action
   - checkpoint: ask_transfer_to_human
 
 - story: complain after last cycle

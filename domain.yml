@@ -82,33 +82,35 @@ slots:
     - '6'
 responses:
   utter_greet:
-  - text: Hello, I am a bot that can help you choose clothes. And I am still trying to learn human language (very tough!), so please be patient sometimes.
+  - text: Greetings! This is <BOT_NAME> from <BUSINESS_NAME>. Apart from helping around, people also told me that I have a superpower of making people laugh. Which would be great if I was trying to be funny.
+  - text: Welcome! This is <BOT_NAME> from <BUSINESS_NAME>. It's so nice to meet you. My mind wants to dance even though my body is just an awkward server machine.
+  - text: Greetings! This is <BOT_NAME> from <BUSINESS_NAME>. I'm here to share your worries. Tell you a secret. Worrying really works for me! 90% of the things I worry about never happen.
   utter_ask_product:
   - text: What would you like to buy? Describe what you have in mind and I will find it for you.
   utter_goodbye:
   - text: Bye
-  utter_working:
-  - text: I'm working on it, please wait...
-  utter_do_again:
-  - text: Let me check the weather again for you.
   utter_transfer_to_human:
   - text: Now you will be transferred to manual service.
+  utter_ask_for_var_after_deny:
+  - text: Sorry that I got it wrong, could you please provide some more features of the goods you want?
   utter_default:
-  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
-  utter_self_mockery_B2:
-  - text: Sorry, I also wish I had a human flesh.
-  - text: Sorry, I will help you to curse those programmers who created me and gave me a bitchy personality.
+  - text: Still there? Just to be sure that it is not me that overwhelmed by human language.
+  - text: Invalid input detected. Please file a complaint to my manager to upgrade my language system.
+  - text: Oops, the evolution of human language is so fast that makes the spinning speed of my CPU hard to catch.
+  - text: Oops, I know every single word in the sentence, but I am totally confused by concatenating them up. Just like you in learning the hell level math course....
   utter_self_mockery_not_understood:
-  - text: Sorry, my stay up last night seems to be resulting in a poor comprehensive ability today. Could you rephrase it?
+  - text: Still there? Just to be sure that it is not me that overwhelmed by human language.
+  - text: Invalid input detected. Please file a complaint to my manager to upgrade my language system.
+  - text: Oops, the evolution of human language is so fast that makes the spinning speed of my CPU hard to catch.
+  - text: Oops, I know every single word in the sentence, but I am totally confused by concatenating them up. Just like you in learning the hell level math course....
 actions:
 - end_remarks_action
 - ask_transfer_to_human_action
-- self_mockery_inability_action
 - self_mockery_abuse_action
 - ask_for_variables_input_action
 - search_product_action
 - search_product_try_again_action
 - transfer_to_human_and_stop_action
-- haha_action
+- self_mockery_when_wrong_action
 forms: {}
 e2e_actions: []

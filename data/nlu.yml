@@ -56,24 +56,14 @@ nlu:
     - You idiot
     - Stupid chatbot
     - You're a jerk
-    - You are just an idiot
     - You have no intelligence
     - You can't think by yourself
-    - You are a fool
-    - You are just a robot
-    - You are not a human
+    - You fool
     - No, you stupid bot!
-- intent: sex_harassment
-  examples: |
-    - You bitch
-    - You wanton
-    - You behave like a bitch
-    - Little bitch
-    - Fuck
-    - Fuck you
-    - Fuck your mother
 - intent: out_of_scope
   examples: |
+    - Who are you
+    - who are you
     - What is calculus
     - What 2 + 2
     - train a bot
@@ -81,9 +71,18 @@ nlu:
     - wtf
 - intent: variables
   examples: |
+    - [blue](Color)
+    - [blue](Color) shirt
+    - a [blue](Color) shirt with [long sleeves](Sleeve_length)
+    - [dark](Darkness) [blue](Color) shirt
+    - [formal](Style) shirt
+    - [formal](Style)
+    - [long sleeves](Sleeve_length)
     - I want a  [formal](Style) [blue](Color) shirt with [long sleeves](Sleeve_length).
     - I want a [dark](Darkness) [blue](Color) shirt with [long sleeves](Sleeve_length) and [formal](Style) style.
+    - No, I want a more [formal] shirt.
     - No, I want a [darker](Darkness) one.
+    - without the stickers
 - intent: try_again
   examples: |
     - try again

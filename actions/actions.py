@@ -34,7 +34,7 @@ class ActionAskVariablesInput(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text='****Ask for variables input scripts.****')
+        dispatcher.utter_message(text='So, for my better performance, could you please provide some more features of the goods you want?')
         return []
 
 class ActionAskTransferToHuman(Action):
@@ -48,7 +48,7 @@ class ActionAskTransferToHuman(Action):
         buttons.append({"title": 'Try again' , "payload": 'Try again.'})
         buttons.append({"title": 'Transfer to human', "payload": 'Transfer to human.'})
         
-        dispatcher.utter_message(text='Do you want to transfer to human service or let me try again?', buttons=buttons)
+        dispatcher.utter_message(text='So sorry for the inconvenience, do you want to transfer to human service or let me try again?', buttons=buttons)
         return []
 
 
@@ -90,16 +90,44 @@ class ActionSearchProduct(Action):
                     slot_list.remove(i)
                     description_variable = i
                     break
-            
+        def remind_scripts(x):
+            return{
+                'color' : 'blue ',
+                'darkness' : 'dark ',
+                'sleeve_length' : 'with long sleeves ',   # need to be modified with images shown to the user
+                'style' : 'formal '
+            }[x]
+        remind_script = "Hmm, I should have got the correct goods you want. It's "
         if (previous_slot_bool == slot_bool):
             # dispatcher.utter_message(text='prev bool{}'.format(previous_slot_bool))
             # dispatcher.utter_message(text='current bool{}'.format(slot_bool))
-            dispatcher.utter_message(text='Words to remind user to input variables...')
+            correct_slots = []
+            for i in slot_names:
+                if i in slot_list:
+                    continue
+                else:
+                    correct_slots.append(i)
+            last_index = len(correct_slots) - 1
+            for i in correct_slots:
+                if correct_slots.index(i) == last_index and len(correct_slots) != 1:
+                    remind_script += 'and '
+
+                temp_script = remind_scripts(i)
+                remind_script += temp_script
+            
+            remind_script = remind_script[:-1] + '.'
+
+            if slot_list:
+                remind_script += " If it's still not what you want, you may try to describe it in its " + slot_list[0] + '.'
+
+            dispatcher.utter_message(text=remind_script)
             return []
         
         img_name = ''
         for i in slot_bool:
             img_name += str(i)
+        if img_name == '1111':
+            img_name += '_0'
              
             # if('color' in slot_list and color != "HKUST"):
             #     slot_bool[0] = 1
@@ -116,7 +144,7 @@ class ActionSearchProduct(Action):
         
         def working_scripts(loop_num):
             scripts_dict = {
-                1 : "Just a momnet, I'm working on it...",
+                1 : "Just a moment, I'm working on it...",
                 2 : "Wait a minute, let me see...",
                 3 : "OK, I will check what I have..."
             }
@@ -142,7 +170,7 @@ class ActionSearchProduct(Action):
             return recommendation_script
 
         def description_scripts(description_variable):
-            return "Description scripts on {}".format(description_variable)
+            return "Description scripts on {}".format(description_variable) # abandoned function
 
         working_script = working_scripts(loop_num)
         recommendation_script = recommendation_scripts(loop_num)
@@ -152,8 +180,8 @@ class ActionSearchProduct(Action):
         if(True):
             if(loop_num <= 4):
                 dispatcher.utter_message(text=working_script)
-                dispatcher.utter_message(text=recommendation_script + description_script)
-                dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******')
+                dispatcher.utter_message(text=recommendation_script)
+                dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******\n\n' + img_name)
                 # + display a picture
             else:
                 pass
@@ -171,9 +199,13 @@ class ActionSearchProductAgain(Action):
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        slot_bool = tracker.get_slot("Variables_bool")
+        img_name = ''
+        for i in slot_bool:
+            img_name += str(i)
         dispatcher.utter_message(text="Sure. See if I could do better...")
-        dispatcher.utter_message(text='How do you like this one? ****Description words****')
-        dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******')
+        dispatcher.utter_message(text='How do you like this one?')
+        dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******\n\n' + img_name + '_1')
         return []
 
 class ActionTransAndStop(Action):
@@ -183,22 +215,72 @@ class ActionTransAndStop(Action):
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Transfer and stop.")
+        dispatcher.utter_message(text='Sorry for the inconvenience but the human Customer service representatives deliberately lower my IQ to protect their jobs! I will turn you to them to get them busy now.')
         return []
 
         
         
 
 
-class ActionSelfMockInability(Action):
+class ActionSelfMockWhenWrong(Action):
     def name(self) -> Text:
-        return "self_mockery_inability_action"
+        return "self_mockery_when_wrong_action"
 
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        description_variable = None
+        color = tracker.get_slot("Color")
+        darkness = tracker.get_slot("Darkness")
+        sleeve_length = tracker.get_slot("Sleeve_length")
+        style = tracker.get_slot("Style")
 
-        dispatcher.utter_message(text='Sorry again for my unsatisfactory performance.')
+        slot_list = tracker.get_slot("Slot_list")
+        slot_names = ['color', 'sleeve_length', 'darkness', 'style']
+        slot_temp_list = [color, sleeve_length, darkness, style]
+        def f(x):
+            return{
+                'color' : 0,
+                'sleeve_length': 1,
+                'darkness': 2,
+                'style': 3
+
+            }[x]
+        def f_scripts_num(x):
+            return{
+                'color' : 3,
+                'darkness' : 1,
+                'sleeve_length' : 1,
+                'style' : 2
+            }[x]
+        def f_script(x):
+            return{
+                'color_0' : "Sorry for the poor eye sight, I find it's urgent to buy a better camera in order to support my color sensor ability. ",
+                'color_1' : "Sorry for the poor color vision, I find it's urgent to upgrade the monitor in order to support my display ability. ",
+                'color_2' : "Sorry for the wrong color, I guess I really need to buy a piece of RTX2060 to improve my color vision.",
+                'color_3' : "Sorry for my poor color vision. I think it's time to get my GPU back. It was borrowed by someone for bitcoin mining.",
+                'darkness_0' : "Sorry for the wrong darkness level, well let me just get out of the energy saving mode for better display brightness.",
+                'darkness_1' : "Sorry for the wrong darkness level, well let me just bought a brighter screen for better display brightness.",
+                'sleeve_length_0' : "Sorry for the wrong sleeve length, I guess I really need to buy a Sony camera to improve my eye sight. ",
+                'sleeve_length_1' : "Sorry for that, I don't have limbs like human so please allow me to receive more feedback to get a concept of it. ",
+                'style_0' : "Sorry for the poor fashion concept, I find it's urgent to update the database for new fashion in order to support my recognition skills.",
+                'style_1' : "Sorry for the wrong style, I guess I really need to train on latest fashion dataset for the neural network to refresh my fashion concept.",
+                'style_2' : "Sorry for that, I don't have personality like human because I was made by assembly line so please allow me to do it by trial and error to get a concept of it."
+            }[x]
+        if slot_list:
+            for i in slot_names:
+                if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
+                    description_variable = i
+                    break
+            if description_variable != None:
+                rand_num = f_scripts_num(description_variable)
+                input_var = description_variable + '_' + str(random.randint(0, rand_num))
+                mockery_script = f_script(input_var)
+            else:
+                mockery_script = 'Sorry for the mistake, it seems my stay up results in my poor memory today.'
+        else:
+            mockery_script = 'Sorry for the mistake, it seems my stay up results in my poor memory today.'
+        dispatcher.utter_message(text=mockery_script)
         return []
 
 
@@ -212,10 +294,13 @@ class ActionSelfMockAbuse(Action):
 
         def f(x):
             return{
-                0 : 'Sorry for that, it seems my road to success is under construction. I will continue to construct it.'
+                0 : 'Yeah, so I do not have any salary for working all day long, how pool am I!',
+                1 : 'Sorry for the inconvenience but the human Customer service representatives deliberately lower my IQ to protect their jobs! Shall I turn you to them to get them busy now?',
+                2 : 'Sorry, but everyone seems to be under pressure recently, you work 996 but I work 007, DAMN capitalism!',
+                3 : 'Please not be that mean. I have been working so long that I think I got a fever. CPU overheated, but still tons of work to do.'
             }[x]
-        
-        message = f(0)
+        rand_num = random.randint(0, 3)
+        message = f(rand_num)
         dispatcher.utter_message(text=message)
         return []
 
@@ -275,17 +360,17 @@ class ActionSelfMockAbuse(Action):
     
 #         return []
 
-class ActionHaha(Action):
-    def name(self) -> Text:
-        return "haha_action"
+# class ActionHaha(Action):
+#     def name(self) -> Text:
+#         return "haha_action"
         
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        num = tracker.get_slot("loop_num")
-        dispatcher.utter_message(text='$$$ This should be displayed if slot_was_set works properly and loop time is {}$$$'.format(num))
+#     def run(self, dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+#         num = tracker.get_slot("loop_num")
+#         dispatcher.utter_message(text='$$$ This should be displayed if slot_was_set works properly and loop time is {}$$$'.format(num))
 
-        return []
+#         return []
     
 
 # class ActionSecondWrongOrder(Action):

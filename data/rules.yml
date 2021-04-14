@@ -11,10 +11,7 @@ rules:
 #   steps:
 #   - intent: verbal_abuse
 #   - action: utter_self_mockery_B1
-- rule: Response to sex harassment anytime the user makes sex harassment
-  steps:
-  - intent: sex_harassment
-  - action: utter_self_mockery_B2
+
 - rule: Response to invalid input anytime the user makes invalid input
   steps:
   - intent: nlu_fallback
