@@ -87,17 +87,14 @@ responses:
   - text: Greetings! This is <BOT_NAME> from <BUSINESS_NAME>. I'm here to share your worries. Tell you a secret. Worrying really works for me! 90% of the things I worry about never happen.
   utter_ask_product:
   - text: What would you like to buy? Describe what you have in mind and I will find it for you.
+  utter_ask_variables:
+  - text: For my better performance, could you please provide some features of the goods you want?
   utter_goodbye:
   - text: Bye
   utter_transfer_to_human:
   - text: Now you will be transferred to manual service.
   utter_ask_for_var_after_deny:
   - text: Sorry that I got it wrong, could you please provide some more features of the goods you want?
-  utter_default:
-  - text: Still there? Just to be sure that it is not me that overwhelmed by human language.
-  - text: Invalid input detected. Please file a complaint to my manager to upgrade my language system.
-  - text: Oops, the evolution of human language is so fast that makes the spinning speed of my CPU hard to catch.
-  - text: Oops, I know every single word in the sentence, but I am totally confused by concatenating them up. Just like you in learning the hell level math course....
   utter_self_mockery_not_understood:
   - text: Still there? Just to be sure that it is not me that overwhelmed by human language.
   - text: Invalid input detected. Please file a complaint to my manager to upgrade my language system.
@@ -112,5 +109,6 @@ actions:
 - search_product_try_again_action
 - transfer_to_human_and_stop_action
 - self_mockery_when_wrong_action
+- default_fallback_action
 forms: {}
 e2e_actions: []

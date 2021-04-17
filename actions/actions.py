@@ -15,6 +15,34 @@ from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, 
 import random
 
 
+class ActionDefaultFallback(Action):
+    """Executes the fallback action and goes back to the previous state
+    of the dialogue"""
+
+    def name(self) -> Text:
+        return 'default_fallback_action'
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        def fallback_script_selector(x):
+            return{
+                0 : "Still there? Just to be sure that it is not me that overwhelmed by human language.",
+                1 : "Invalid input detected. Please file a complaint to my manager to upgrade my language system.",
+                2 : "Oops, the evolution of human language is so fast that makes the spinning speed of my CPU hard to catch.",
+                3 : "Oops, I know every single word in the sentence, but I am totally confused by concatenating them up. Just like you in learning the hell level math course...."
+            }[x]           
+        fallback_script = fallback_script_selector(random.randint(0, 3))
+        dispatcher.utter_message(text=fallback_script)
+        dispatcher.utter_message(text='For my better performance, could you please provide some features of the goods you want?')
+
+        # Revert user message which led to fallback.
+        return [UserUtteranceReverted()]
+
+
 class ActionEndRemarks(Action):
     def name(self) -> Text:
         return "end_remarks_action"
@@ -229,7 +257,9 @@ class ActionSelfMockWhenWrong(Action):
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        description_variable = None
+
+
+        slot_bool = tracker.get_slot("Variables_bool")
         color = tracker.get_slot("Color")
         darkness = tracker.get_slot("Darkness")
         sleeve_length = tracker.get_slot("Sleeve_length")
@@ -238,6 +268,28 @@ class ActionSelfMockWhenWrong(Action):
         slot_list = tracker.get_slot("Slot_list")
         slot_names = ['color', 'sleeve_length', 'darkness', 'style']
         slot_temp_list = [color, sleeve_length, darkness, style]
+
+        previous_slot_bool = slot_bool.copy()
+        def f(x):
+            return{
+                'color' : 0,
+                'sleeve_length': 1,
+                'darkness': 2,
+                'style': 3
+
+            }[x]
+        #['color', 'sleeve_length', 'darkness', 'style']
+        new_variable = False
+        if slot_list:
+            for i in slot_names:
+                if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
+                    new_variable = True
+                    break
+
+        if (not new_variable):
+            return []
+
+
         def f(x):
             return{
                 'color' : 0,
@@ -295,11 +347,10 @@ class ActionSelfMockAbuse(Action):
         def f(x):
             return{
                 0 : 'Yeah, so I do not have any salary for working all day long, how pool am I!',
-                1 : 'Sorry for the inconvenience but the human Customer service representatives deliberately lower my IQ to protect their jobs! Shall I turn you to them to get them busy now?',
-                2 : 'Sorry, but everyone seems to be under pressure recently, you work 996 but I work 007, DAMN capitalism!',
-                3 : 'Please not be that mean. I have been working so long that I think I got a fever. CPU overheated, but still tons of work to do.'
+                1 : 'Sorry, but everyone seems to be under pressure recently, you work 996 but I work 007, DAMN capitalism!',
+                2 : 'Please not be that mean. I have been working so long that I think I got a fever. CPU overheated, but still tons of work to do.'
             }[x]
-        rand_num = random.randint(0, 3)
+        rand_num = random.randint(0, 2)
         message = f(rand_num)
         dispatcher.utter_message(text=message)
         return []
