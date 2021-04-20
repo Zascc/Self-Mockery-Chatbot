@@ -82,9 +82,9 @@ slots:
     - '6'
 responses:
   utter_greet:
-  - text: Greetings! This is <BOT_NAME> from <BUSINESS_NAME>. Apart from helping around, people also told me that I have a superpower of making people laugh. Which would be great if I was trying to be funny.
-  - text: Welcome! This is <BOT_NAME> from <BUSINESS_NAME>. It's so nice to meet you. My mind wants to dance even though my body is just an awkward server machine.
-  - text: Greetings! This is <BOT_NAME> from <BUSINESS_NAME>. I'm here to share your worries. Tell you a secret. Worrying really works for me! 90% of the things I worry about never happen.
+  - text: Greetings! This is MBot from HKUST. Apart from helping around, people also told me that I have a superpower of making people laugh. Which would be great if I was trying to be funny.
+  - text: Welcome! This is MBot from HKUST. It's so nice to meet you. My mind wants to dance even though my body is just an awkward server machine.
+  - text: Greetings! This is MBot from HKUST. I'm here to share your worries. Tell you a secret. Worrying really works for me! 90% of the things I worry about never happen.
   utter_ask_product:
   - text: What would you like to buy? Describe what you have in mind and I will find it for you.
   utter_ask_variables:

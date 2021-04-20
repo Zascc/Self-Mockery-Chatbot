@@ -204,12 +204,59 @@ class ActionSearchProduct(Action):
         recommendation_script = recommendation_scripts(loop_num)
         description_script = description_scripts(description_variable)
 
+        # IMAGES: 1111_1 Blue_Long_Dark_Formal : https://imgur.com/aC2NiOE.jpg
+
+        # 0000 Red_Short_Light_Casual : https://imgur.com/ZFBrZCO.jpg
+
+        # 1000 Blue_Short_Light_Casual : https://imgur.com/kRbhO0r.jpg
+        # 0100 Red_Long_Light_Casual : https://imgur.com/v6miRsf.png
+        # 0010 Red_Short_Dark_Casual : https://imgur.com/zQIzd0I.jpg
+        # 0001 Red_Short_Light_Formal : https://imgur.com/N6dvXb8.jpg
+
+        # 1100 Blue_Long_Light_Casual : https://imgur.com/gMsbykS.png
+        # 1010 Blue_Short_Dark_Casual : https://imgur.com/B8OFJeS.jpg
+        # 1001 Blue_Short_Light_Formal : https://imgur.com/FdhCqz6.jpg
+        # 0110 Red_Long_Dark_Casual : https://imgur.com/hiNkJRu.png
+        # 0101 Red_Long_Light_Formal : https://imgur.com/h4p3Ej8.jpg
+        # 0011 Red_Short_Dark_Formal : https://imgur.com/rGXv8uc.png
+
+        # 1110 Blue_Long_Dark_Casual : https://imgur.com/cwMmGPK.png
+        # 1101 Blue_Long_Light_Formal : https://imgur.com/4YFJfhT.jpg
+        # 1011 Blue_Short_Dark_Formal : https://imgur.com/j4nmnE1.png
+        # 0111 Red_Long_Dark_Formal : https://imgur.com/RuUtB6K.jpg
+
+        # 1111_0 Alternative img : https://imgur.com/ixTOp0W.jpg
+
+
+        def img_selector(img_vector):
+            return{
+                '0000' : 'https://imgur.com/ZFBrZCO.jpg',
+                '1000' : 'https://imgur.com/kRbhO0r.jpg',
+                '0100' : 'https://imgur.com/v6miRsf.png',
+                '0010' : 'https://imgur.com/zQIzd0I.jpg',
+                '0001' : 'https://imgur.com/N6dvXb8.jpg',
+                '1100' : 'https://imgur.com/gMsbykS.png',
+                '1010' : 'https://imgur.com/B8OFJeS.jpg',
+                '1001' : 'https://imgur.com/FdhCqz6.jpg',
+                '0110' : 'https://imgur.com/hiNkJRu.png',
+                '0101' : 'https://imgur.com/h4p3Ej8.jpg',
+                '0011' : 'https://imgur.com/rGXv8uc.png',
+                '1110' : 'https://imgur.com/cwMmGPK.png',
+                '1101' : 'https://imgur.com/4YFJfhT.jpg',
+                '1011' : 'https://imgur.com/j4nmnE1.png',
+                '0111' : 'https://imgur.com/RuUtB6K.jpg',
+                '1111_0' : 'https://imgur.com/ixTOp0W.jpg',
+                '1111_1' : 'https://imgur.com/aC2NiOE.jpg'
+            }[img_vector]
+ 
+
+        output_img = img_selector(img_name)
 
         if(True):
             if(loop_num <= 4):
                 dispatcher.utter_message(text=working_script)
-                dispatcher.utter_message(text=recommendation_script)
-                dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******\n\n' + img_name)
+                dispatcher.utter_message(text=recommendation_script, image = output_img)
+                #dispatcher.utter_message(text='d',image=output_img)
                 # + display a picture
             else:
                 pass
@@ -231,9 +278,35 @@ class ActionSearchProductAgain(Action):
         img_name = ''
         for i in slot_bool:
             img_name += str(i)
+        if img_name == '1111':
+            img_name += '_1'
+        
+        def img_selector(img_vector):
+            return{
+                '0000' : 'https://imgur.com/ZFBrZCO.jpg',
+                '1000' : 'https://imgur.com/kRbhO0r.jpg',
+                '0100' : 'https://imgur.com/v6miRsf.png',
+                '0010' : 'https://imgur.com/zQIzd0I.jpg',
+                '0001' : 'https://imgur.com/N6dvXb8.jpg',
+                '1100' : 'https://imgur.com/gMsbykS.png',
+                '1010' : 'https://imgur.com/B8OFJeS.jpg',
+                '1001' : 'https://imgur.com/FdhCqz6.jpg',
+                '0110' : 'https://imgur.com/hiNkJRu.png',
+                '0101' : 'https://imgur.com/h4p3Ej8.jpg',
+                '0011' : 'https://imgur.com/rGXv8uc.png',
+                '1110' : 'https://imgur.com/cwMmGPK.png',
+                '1101' : 'https://imgur.com/4YFJfhT.jpg',
+                '1011' : 'https://imgur.com/j4nmnE1.png',
+                '0111' : 'https://imgur.com/RuUtB6K.jpg',
+                '1111_0' : 'https://imgur.com/ixTOp0W.jpg',
+                '1111_1' : 'https://imgur.com/aC2NiOE.jpg'
+            }[img_vector]
+
+        output_img = img_selector(img_name)
+
         dispatcher.utter_message(text="Sure. See if I could do better...")
-        dispatcher.utter_message(text='How do you like this one?')
-        dispatcher.utter_message(text='*******\n\n*******\n\n*******\n\n*IMAGE*\n\n*******\n\n*******\n\n*******\n\n' + img_name + '_1')
+        dispatcher.utter_message(text='How do you like this one?', image=output_img)
+        # dispatcher.utter_message(attachment=output_img)
         return []
 
 class ActionTransAndStop(Action):

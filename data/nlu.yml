@@ -82,7 +82,9 @@ nlu:
     - I want a [dark](Darkness) [blue](Color) shirt with [long sleeves](Sleeve_length) and [formal](Style) style.
     - No, I want a more [formal] shirt.
     - No, I want a [darker](Darkness) one.
-    - without the stickers
+    - without the [stickers](Style)
+    - without the [logos](Style)
+    - No [logo](Style)
 - intent: try_again
   examples: |
     - try again
