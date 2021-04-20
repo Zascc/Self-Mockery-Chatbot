@@ -179,7 +179,7 @@ class ActionSearchProduct(Action):
             if(loop_num <= 3):
                 working_script = scripts_dict[loop_num]
             else:
-                working_script = "Sure. See if I could do better..."
+                working_script = "See if I could do better..."
             return working_script
 
 
@@ -304,7 +304,7 @@ class ActionSearchProductAgain(Action):
 
         output_img = img_selector(img_name)
 
-        dispatcher.utter_message(text="Sure. See if I could do better...")
+        dispatcher.utter_message(text="See if I could do better...")
         dispatcher.utter_message(text='How do you like this one?', image=output_img)
         # dispatcher.utter_message(attachment=output_img)
         return []
