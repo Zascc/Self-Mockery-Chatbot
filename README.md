@@ -12,7 +12,7 @@ Links for demo:
 
 [Self-Mockery bot for buying shoes](https://github.com/Zascc)
 
-[Baseline bot for buying shoes](http://34.92.113.149:83/guest/conversations/production/fa7bf55001ea404e998888216eb61c52)
+[Baseline bot for buying shoes](http://35.229.141.143:81/guest/conversations/production/375131ad4e7a4396b2eadbf3beaf1f48)
 
 
 
