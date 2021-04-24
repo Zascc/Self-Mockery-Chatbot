@@ -8,7 +8,11 @@ Links for demo:
 
 [Self-Mockery bot for buying shirt](http://34.92.113.149/guest/conversations/production/98e09442eaac4c148204551f9197d0fa)
 
+[Self-Mockery bot for buying shoes](https://github.com/Zascc)
+
 [Baseline bot for buying shoes](http://34.92.113.149:83/guest/conversations/production/fa7bf55001ea404e998888216eb61c52)
+
+[Baseline bot for buying shirt](https://github.com/Zascc)
 
 
 
