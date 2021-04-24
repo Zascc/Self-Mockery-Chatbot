@@ -41,6 +41,7 @@ stories:
   - action: self_mockery_abuse_action
   - action: ask_for_variables_input_action
   - intent: variables
+  - action: self_mockery_when_wrong_action
   - checkpoint: loop_started
 
 
@@ -101,8 +102,10 @@ stories:
 - story: deny after last cycle
   steps:
   - checkpoint: satisfaction_started
-  - intent: deny
-  - action: self_mockery_when_wrong_action
+  - or:
+    - intent: deny
+    - intent: variables
+  - action: doubt_action  # seems got what you want
   - checkpoint: ask_transfer_to_human
 
 - story: complain after last cycle
@@ -110,6 +113,7 @@ stories:
   - checkpoint: satisfaction_started
   - intent: complain
   - action: self_mockery_abuse_action
+  - action: doubt_action
   - checkpoint: ask_transfer_to_human
 
 
@@ -119,8 +123,7 @@ stories:
   - action: ask_transfer_to_human_action
   - intent: transfer_to_human
   - action: transfer_to_human_and_stop_action
-
-
+  - action: end_remarks_action
 
 
 # utils stories

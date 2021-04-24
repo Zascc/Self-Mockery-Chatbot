@@ -11,7 +11,7 @@ from typing import Any, Text, Dict, List
 #
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction, AllSlotsReset
+from rasa_sdk.events import SlotSet, Restarted, SessionStarted, ActionExecuted, FollowupAction, AllSlotsReset, ReminderScheduled, UserUtteranceReverted
 import random
 
 
@@ -77,6 +77,58 @@ class ActionAskTransferToHuman(Action):
         buttons.append({"title": 'Transfer to human', "payload": 'Transfer to human.'})
         
         dispatcher.utter_message(text='So sorry for the inconvenience, do you want to transfer to human service or let me try again?', buttons=buttons)
+        return []
+
+class ActionDoubt(Action):
+    def name(self) -> Text:
+        return "doubt_action"
+
+    def run(self, dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+    
+        color = tracker.get_slot("Color")
+        darkness = tracker.get_slot("Darkness")
+        sleeve_length = tracker.get_slot("Sleeve_length")
+        style = tracker.get_slot("Style")
+
+        slot_bool = tracker.get_slot("Variables_bool")
+        previous_slot_bool = slot_bool.copy()
+        slot_list = tracker.get_slot("Slot_list")
+        slot_names = ['color', 'sleeve_length', 'darkness', 'style']
+        slot_temp_list = [color, sleeve_length, darkness, style]
+        def remind_scripts(x):
+            return{
+                'color' : 'blue ',
+                'darkness' : 'dark ',
+                'sleeve_length' : 'with long sleeves ',   # need to be modified with images shown to the user
+                'style' : 'formal '
+            }[x]
+
+        remind_script = "Hmm, I should have got the correct goods you want. It's "
+        
+
+
+
+        correct_slots = []
+        for i in slot_names:
+            if i in slot_list:
+                continue
+            else:
+                correct_slots.append(i)
+        last_index = len(correct_slots) - 1
+        for i in correct_slots:
+            if correct_slots.index(i) == last_index and len(correct_slots) != 1:
+                remind_script += 'and '
+
+            temp_script = remind_scripts(i)
+            remind_script += temp_script
+        
+        remind_script = remind_script[:-1] + '.'
+    
+        
+        dispatcher.utter_message(text=remind_script)
         return []
 
 
@@ -204,49 +256,49 @@ class ActionSearchProduct(Action):
         recommendation_script = recommendation_scripts(loop_num)
         description_script = description_scripts(description_variable)
 
-        # IMAGES: 1111_1 Blue_Long_Dark_Formal : https://imgur.com/aC2NiOE.jpg
+        # IMAGES: 1111_1 Blue_Long_Dark_Formal : https://i.imgur.com/tFUjH1W.gif
 
-        # 0000 Red_Short_Light_Casual : https://imgur.com/ZFBrZCO.jpg
+        # 0000 Red_Short_Light_Casual : https://i.imgur.com/POsGGLf.gif
 
-        # 1000 Blue_Short_Light_Casual : https://imgur.com/kRbhO0r.jpg
-        # 0100 Red_Long_Light_Casual : https://imgur.com/v6miRsf.png
-        # 0010 Red_Short_Dark_Casual : https://imgur.com/zQIzd0I.jpg
-        # 0001 Red_Short_Light_Formal : https://imgur.com/N6dvXb8.jpg
+        # 1000 Blue_Short_Light_Casual : https://i.imgur.com/70kfh8K.gif
+        # 0100 Red_Long_Light_Casual : https://i.imgur.com/p3Ac0Fl.gif
+        # 0010 Red_Short_Dark_Casual : https://i.imgur.com/qCvk3N9.gif
+        # 0001 Red_Short_Light_Formal : https://i.imgur.com/OIfpSHX.gif
 
-        # 1100 Blue_Long_Light_Casual : https://imgur.com/gMsbykS.png
-        # 1010 Blue_Short_Dark_Casual : https://imgur.com/B8OFJeS.jpg
-        # 1001 Blue_Short_Light_Formal : https://imgur.com/FdhCqz6.jpg
-        # 0110 Red_Long_Dark_Casual : https://imgur.com/hiNkJRu.png
-        # 0101 Red_Long_Light_Formal : https://imgur.com/h4p3Ej8.jpg
-        # 0011 Red_Short_Dark_Formal : https://imgur.com/rGXv8uc.png
+        # 1100 Blue_Long_Light_Casual : https://i.imgur.com/YmDVBUy.gif
+        # 1010 Blue_Short_Dark_Casual : https://i.imgur.com/HYSBbz9.gif
+        # 1001 Blue_Short_Light_Formal : https://i.imgur.com/3SQ1xAK.gif
+        # 0110 Red_Long_Dark_Casual : https://i.imgur.com/K5KzdFf.gif
+        # 0101 Red_Long_Light_Formal : https://i.imgur.com/qvIa80p.gif
+        # 0011 Red_Short_Dark_Formal : https://i.imgur.com/tjoOcfS.gif
 
-        # 1110 Blue_Long_Dark_Casual : https://imgur.com/cwMmGPK.png
-        # 1101 Blue_Long_Light_Formal : https://imgur.com/4YFJfhT.jpg
-        # 1011 Blue_Short_Dark_Formal : https://imgur.com/j4nmnE1.png
-        # 0111 Red_Long_Dark_Formal : https://imgur.com/RuUtB6K.jpg
+        # 1110 Blue_Long_Dark_Casual : https://i.imgur.com/BnCbiXB.gif
+        # 1101 Blue_Long_Light_Formal : https://i.imgur.com/cUOdTCj.gif
+        # 1011 Blue_Short_Dark_Formal : https://i.imgur.com/FNAvgc9.gif
+        # 0111 Red_Long_Dark_Formal : https://i.imgur.com/GuZ0kYh.gif
 
-        # 1111_0 Alternative img : https://imgur.com/ixTOp0W.jpg
+        # 1111_0 Alternative img : https://i.imgur.com/rfn0a2z.gif
 
 
         def img_selector(img_vector):
             return{
-                '0000' : 'https://imgur.com/ZFBrZCO.jpg',
-                '1000' : 'https://imgur.com/kRbhO0r.jpg',
-                '0100' : 'https://imgur.com/v6miRsf.png',
-                '0010' : 'https://imgur.com/zQIzd0I.jpg',
-                '0001' : 'https://imgur.com/N6dvXb8.jpg',
-                '1100' : 'https://imgur.com/gMsbykS.png',
-                '1010' : 'https://imgur.com/B8OFJeS.jpg',
-                '1001' : 'https://imgur.com/FdhCqz6.jpg',
-                '0110' : 'https://imgur.com/hiNkJRu.png',
-                '0101' : 'https://imgur.com/h4p3Ej8.jpg',
-                '0011' : 'https://imgur.com/rGXv8uc.png',
-                '1110' : 'https://imgur.com/cwMmGPK.png',
-                '1101' : 'https://imgur.com/4YFJfhT.jpg',
-                '1011' : 'https://imgur.com/j4nmnE1.png',
-                '0111' : 'https://imgur.com/RuUtB6K.jpg',
-                '1111_0' : 'https://imgur.com/ixTOp0W.jpg',
-                '1111_1' : 'https://imgur.com/aC2NiOE.jpg'
+                '0000' : 'https://i.imgur.com/POsGGLf.gif',
+                '1000' : 'https://i.imgur.com/70kfh8K.gif',
+                '0100' : 'https://i.imgur.com/p3Ac0Fl.gif',
+                '0010' : 'https://i.imgur.com/qCvk3N9.gif',
+                '0001' : 'https://i.imgur.com/OIfpSHX.gif',
+                '1100' : 'https://i.imgur.com/YmDVBUy.gif',
+                '1010' : 'https://i.imgur.com/HYSBbz9.gif',
+                '1001' : 'https://i.imgur.com/3SQ1xAK.gif',
+                '0110' : 'https://i.imgur.com/K5KzdFf.gif',
+                '0101' : 'https://i.imgur.com/qvIa80p.gif',
+                '0011' : 'https://i.imgur.com/tjoOcfS.gif',
+                '1110' : 'https://i.imgur.com/BnCbiXB.gif',
+                '1101' : 'https://i.imgur.com/cUOdTCj.gif',
+                '1011' : 'https://i.imgur.com/FNAvgc9.gif',
+                '0111' : 'https://i.imgur.com/GuZ0kYh.gif',
+                '1111_0' : 'https://i.imgur.com/rfn0a2z.gif',
+                '1111_1' : 'https://i.imgur.com/tFUjH1W.gif'
             }[img_vector]
  
 
@@ -255,7 +307,7 @@ class ActionSearchProduct(Action):
         if(True):
             if(loop_num <= 4):
                 dispatcher.utter_message(text=working_script)
-                dispatcher.utter_message(text=recommendation_script, image = output_img)
+                dispatcher.utter_message(text=recommendation_script, image=output_img)
                 #dispatcher.utter_message(text='d',image=output_img)
                 # + display a picture
             else:
@@ -283,23 +335,23 @@ class ActionSearchProductAgain(Action):
         
         def img_selector(img_vector):
             return{
-                '0000' : 'https://imgur.com/ZFBrZCO.jpg',
-                '1000' : 'https://imgur.com/kRbhO0r.jpg',
-                '0100' : 'https://imgur.com/v6miRsf.png',
-                '0010' : 'https://imgur.com/zQIzd0I.jpg',
-                '0001' : 'https://imgur.com/N6dvXb8.jpg',
-                '1100' : 'https://imgur.com/gMsbykS.png',
-                '1010' : 'https://imgur.com/B8OFJeS.jpg',
-                '1001' : 'https://imgur.com/FdhCqz6.jpg',
-                '0110' : 'https://imgur.com/hiNkJRu.png',
-                '0101' : 'https://imgur.com/h4p3Ej8.jpg',
-                '0011' : 'https://imgur.com/rGXv8uc.png',
-                '1110' : 'https://imgur.com/cwMmGPK.png',
-                '1101' : 'https://imgur.com/4YFJfhT.jpg',
-                '1011' : 'https://imgur.com/j4nmnE1.png',
-                '0111' : 'https://imgur.com/RuUtB6K.jpg',
-                '1111_0' : 'https://imgur.com/ixTOp0W.jpg',
-                '1111_1' : 'https://imgur.com/aC2NiOE.jpg'
+                '0000' : 'https://i.imgur.com/POsGGLf.gif',
+                '1000' : 'https://i.imgur.com/70kfh8K.gif',
+                '0100' : 'https://i.imgur.com/p3Ac0Fl.gif',
+                '0010' : 'https://i.imgur.com/qCvk3N9.gif',
+                '0001' : 'https://i.imgur.com/OIfpSHX.gif',
+                '1100' : 'https://i.imgur.com/YmDVBUy.gif',
+                '1010' : 'https://i.imgur.com/HYSBbz9.gif',
+                '1001' : 'https://i.imgur.com/3SQ1xAK.gif',
+                '0110' : 'https://i.imgur.com/K5KzdFf.gif',
+                '0101' : 'https://i.imgur.com/qvIa80p.gif',
+                '0011' : 'https://i.imgur.com/tjoOcfS.gif',
+                '1110' : 'https://i.imgur.com/BnCbiXB.gif',
+                '1101' : 'https://i.imgur.com/cUOdTCj.gif',
+                '1011' : 'https://i.imgur.com/FNAvgc9.gif',
+                '0111' : 'https://i.imgur.com/GuZ0kYh.gif',
+                '1111_0' : 'https://i.imgur.com/rfn0a2z.gif',
+                '1111_1' : 'https://i.imgur.com/tFUjH1W.gif'
             }[img_vector]
 
         output_img = img_selector(img_name)
@@ -316,7 +368,7 @@ class ActionTransAndStop(Action):
     def run(self, dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text='Sorry for the inconvenience but the human Customer service representatives deliberately lower my IQ to protect their jobs! I will turn you to them to get them busy now.')
+        dispatcher.utter_message(text='Sorry for the inconvenience but the human customer service representatives deliberately lower my IQ to protect their jobs! I will turn you to them to get them busy now.')
         return []
 
         
@@ -406,6 +458,7 @@ class ActionSelfMockWhenWrong(Action):
         else:
             mockery_script = 'Sorry for the mistake, it seems my stay up results in my poor memory today.'
         dispatcher.utter_message(text=mockery_script)
+
         return []
 
 

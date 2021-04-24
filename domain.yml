@@ -110,5 +110,6 @@ actions:
 - transfer_to_human_and_stop_action
 - self_mockery_when_wrong_action
 - default_fallback_action
+- doubt_action
 forms: {}
 e2e_actions: []
