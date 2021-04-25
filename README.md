@@ -1,8 +1,6 @@
 # Self-Mockery-Chatbot
-### A simple chatbot with some self-mockery ability built in.
+### To interact with the chatbots, please say "hi" or any other greeting words to evoke it.
 
-
-<!---http://35.241.90.113:5002/guest/conversations/production/c96f325d1c634fd8a680705697440d73--->
 
 Links for demo: 
 
@@ -15,7 +13,18 @@ Links for demo:
 [Baseline bot for buying shoes](http://35.229.141.143:81/guest/conversations/production/375131ad4e7a4396b2eadbf3beaf1f48)
 
 
+## Function of the Chatbot 
 
 
+User will be asked to describe the following two products to the chatbot.
 
+Shirt:
 
+![alt text](https://i.imgur.com/tFUjH1W.gif "Dark Blue Shirt with Long Sleeves")
+
+Shoes:
+
+![alt text](https://i.imgur.com/n4suwbO.gif "Light Blue Sneaker with High Upper")
+
+During the interaction, the chatbot will detect user's input features of the products and get only one of the unconfirmed feature correct each time.
+In this way, many mistakes will be made by the chatbot in the interaction process. Hence self-mockery are designed to serve as the apology after chatbot's breakdowns and incomprehension， or to handle possible user's complain in the self-mockery chatbots. While in the baseline chatbots, there will only be normal apology after the breakdowns， incomprehension and user's complain.
