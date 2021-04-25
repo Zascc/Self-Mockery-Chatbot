@@ -27,4 +27,5 @@ Shoes:
 ![alt text](https://i.imgur.com/n4suwbO.gif "Light Blue Sneaker with High Upper")
 
 During the interaction, the chatbot will detect user's input features of the products and get only one of the unconfirmed feature correct each time.
-In this way, many mistakes will be made by the chatbot in the interaction process. Hence self-mockery are designed to serve as the apology after chatbot's breakdowns and incomprehension， or to handle possible user's complain in the self-mockery chatbots. While in the baseline chatbots, there will only be normal apology after the breakdowns， incomprehension and user's complain.
+In this way, many mistakes will be made by the chatbot in the interaction process. Hence self-mockery are designed to serve as the apology after chatbot's breakdowns and incomprehension， or to handle possible user's complain in the self-mockery chatbots. While in the baseline chatbots, there will only be normal apology after the breakdowns incomprehension and user's complain.
+
