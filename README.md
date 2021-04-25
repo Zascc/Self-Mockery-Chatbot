@@ -1,5 +1,5 @@
 # Self-Mockery-Chatbot
-### To interact with the chatbots, please say "hi" or any other greeting words to evoke it.
+### To start chatting with the chatbots, please say "hi" or any other greeting words to evoke it.
 
 
 Links for demo: 
