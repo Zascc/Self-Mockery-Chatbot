@@ -162,8 +162,22 @@ class ActionSearchProduct(Action):
 
             }[x]
         #['color', 'sleeve_length', 'darkness', 'style']
+        entities = tracker.latest_message['entities']
+        last_msg_entities_list = []
+        for i in entities:
+            last_msg_entities_list.append(i['entity'].lower())
+        
         description_variable = None
-        if slot_list:
+        if last_msg_entities_list:
+            for i in last_msg_entities_list:
+                if i in slot_list and slot_temp_list[f(i)] != "HKUST":
+                    slot_bool[f(i)] = 1
+                    slot_list.remove(i)
+                    description_variable = i
+                    break
+
+
+        elif slot_list:
             for i in slot_names:
                 if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
                     slot_bool[f(i)] = 1
@@ -444,19 +458,31 @@ class ActionSelfMockWhenWrong(Action):
                 'style_1' : "Sorry for the wrong style, I guess I really need to train on latest fashion dataset for the neural network to refresh my fashion concept.",
                 'style_2' : "Sorry for that, I don't have personality like human because I was made by assembly line so please allow me to do it by trial and error to get a concept of it."
             }[x]
-        if slot_list:
+
+        entities = tracker.latest_message['entities']
+        last_msg_entities_list = []
+        for i in entities:
+            last_msg_entities_list.append(i['entity'].lower())
+
+        
+        description_variable = None
+        if last_msg_entities_list:
+            for i in last_msg_entities_list:
+                if i in slot_list and slot_temp_list[f(i)] != "HKUST":
+                    description_variable = i
+                    break
+        elif slot_list:
             for i in slot_names:
                 if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
                     description_variable = i
                     break
-            if description_variable != None:
-                rand_num = f_scripts_num(description_variable)
-                input_var = description_variable + '_' + str(random.randint(0, rand_num))
-                mockery_script = f_script(input_var)
-            else:
-                mockery_script = 'Sorry for the mistake, it seems my stay up results in my poor memory today.'
+        if description_variable != None:
+            rand_num = f_scripts_num(description_variable)
+            input_var = description_variable + '_' + str(random.randint(0, rand_num))
+            mockery_script = f_script(input_var)
         else:
             mockery_script = 'Sorry for the mistake, it seems my stay up results in my poor memory today.'
+
         dispatcher.utter_message(text=mockery_script)
 
         return []
