@@ -30,6 +30,8 @@ nlu:
     - see you later
 - intent: affirm
   examples: |
+    - Great
+    - yeeeeeeees
     - yes
     - y
     - indeed
@@ -60,6 +62,7 @@ nlu:
     - You can't think by yourself
     - You fool
     - No, you stupid bot!
+    - shit
 - intent: out_of_scope
   examples: |
     - Who are you
@@ -69,8 +72,11 @@ nlu:
     - train a bot
     - ??
     - wtf
+    - more interesting
+    - weather
 - intent: variables
   examples: |
+    - shirt
     - [blue](Color)
     - [blue](Color) shirt
     - a [blue](Color) shirt with [long sleeves](Sleeve_length)

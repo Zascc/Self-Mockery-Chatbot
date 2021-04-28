@@ -153,6 +153,9 @@ class ActionSearchProduct(Action):
         slot_temp_list = [color, sleeve_length, darkness, style]
 
         previous_slot_bool = slot_bool.copy()
+        if slot_temp_list == ["HKUST", "HKUST", "HKUST", "HKUST"]:
+            dispatcher.utter_message(text='Hmm, could you please provide some more features of the goods you want? Like the color?')
+            return []
         def f(x):
             return{
                 'color' : 0,
@@ -424,7 +427,8 @@ class ActionSelfMockWhenWrong(Action):
                 if(i in slot_list and slot_temp_list[f(i)] != "HKUST"):
                     new_variable = True
                     break
-
+        if slot_bool == [0,0,0,0]:
+            return []
         if (not new_variable):
             return []
 
