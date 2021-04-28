@@ -4,7 +4,7 @@
 
 Links for demo: 
 
-[Self-Mockery bot for buying shirt](http://34.92.113.149/guest/conversations/production/98e09442eaac4c148204551f9197d0fa)
+[Self-Mockery bot for buying shirt](http://34.96.193.19/guest/conversations/production/98e09442eaac4c148204551f9197d0fa)
 
 [Baseline bot for buying shirt](http://34.92.113.149:81/guest/conversations/production/8db421748c434e1193a773ece74c8e45)
 
