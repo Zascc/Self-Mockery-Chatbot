@@ -171,8 +171,14 @@ class ActionSearchProduct(Action):
             last_msg_entities_list.append(i['entity'].lower())
         
         description_variable = None
+        length = len(last_msg_entities_list)
+        sorted_entity_list=[]
         if last_msg_entities_list:
-            for i in last_msg_entities_list:
+            for i in slot_list:
+                if i in last_msg_entities_list:
+                    sorted_entity_list.append(i)
+
+            for i in sorted_entity_list:
                 if i in slot_list and slot_temp_list[f(i)] != "HKUST":
                     slot_bool[f(i)] = 1
                     slot_list.remove(i)
@@ -322,13 +328,16 @@ class ActionSearchProduct(Action):
         output_img = img_selector(img_name)
 
         if(True):
-            if(loop_num <= 4):
+            if(loop_num <= 3):
                 dispatcher.utter_message(text=working_script)
                 dispatcher.utter_message(text=recommendation_script, image=output_img)
                 #dispatcher.utter_message(text='d',image=output_img)
                 # + display a picture
             else:
-                pass
+                buttons = []
+                buttons.append({"title": 'Complain' , "payload": 'No, you stupid chatbot!'})
+                dispatcher.utter_message(text=working_script)
+                dispatcher.utter_message(text=recommendation_script, image = output_img, buttons=buttons)
             loop_num += 1
         else:
             pass
