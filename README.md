@@ -8,11 +8,11 @@ Server out of money :(
 <!---
 [Self-Mockery bot for buying shirt](http://34.96.193.19/guest/conversations/production/98e09442eaac4c148204551f9197d0fa)
 
-[Baseline bot for buying shirt](http://34.96.193.19:81/guest/conversations/production/8db421748c434e1193a773ece74c8e45)
+[Baseline bot for buying shirt]http://34.92.23.49/guest/conversations/production/80372a4c83c447038093ab2bfce426ac)
 
 [Self-Mockery bot for buying shoes](http://35.229.141.143/guest/conversations/production/54c90935d41540f19de96020f6887253)
 
-[Baseline bot for buying shoes](http://35.229.141.143:81/guest/conversations/production/375131ad4e7a4396b2eadbf3beaf1f48)
+[Baseline bot for buying shoes]http://34.92.23.49:81/guest/conversations/production/504dd857df8a4efba341e0cd7d2d0a8a)
 --->
 
 ## Function of the Chatbot 
